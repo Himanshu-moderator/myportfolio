@@ -1,16 +1,38 @@
-# three_d_portfolio
+# Himanshu Chatterjee — Portfolio
 
-A new Flutter project.
+Personal portfolio site, built with Flutter (web). Covers who I am, what I've worked on, and how to reach me.
 
-## Getting Started
+## About
 
-This project is a starting point for a Flutter application.
+I'm transitioning from mobile development into product management. This site is both a portfolio and a bit of a proving ground — I wanted to build something myself rather than use a template, so it's a full Flutter web app with custom animations and layout rather than a static page.
 
-A few resources to get you started if this is your first Flutter project:
+## Sections
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Home** — quick introduction
+- **About** — background and how I got here
+- **Skills** — product and technical skills
+- **Portfolio** — projects I've built
+- **Contact** — links to reach me
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Tech stack
+
+- Flutter / Dart (web)
+- Custom animated widgets (hero section, transitions)
+- `font_awesome_flutter` for icons
+
+## Running locally
+
+```bash
+flutter pub get
+flutter run -d chrome
+```
+
+## Status
+
+Actively updated as I add real project write-ups and case studies.
+
+## Contact
+
+- [LinkedIn](https://www.linkedin.com/in/himanshu-chatterjee-386684267)
+- [GitHub](https://github.com/Himanshu-moderator)
+- himanshu.work.io2@gmail.com
