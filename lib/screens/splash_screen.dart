@@ -321,7 +321,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                             child: AnimatedTextKit(
                               animatedTexts: [
                                 TypewriterAnimatedText(
-                                  'www.hc_alpha.com', // Customize your domain here
+                                  "Himanshu's Portfolio",
                                   speed: const Duration(milliseconds: 80), // Slightly faster typing speed
                                   curve: Curves.easeInCubic,
                                 ),
