@@ -59,10 +59,12 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
           spacing: 15.0,
           runSpacing: 15.0,
           children: const [
-            SkillChip(text: 'React'),
-            SkillChip(text: 'Javascript'),
-            SkillChip(text: 'Node.js'),
-            SkillChip(text: 'Tailwind'),
+            SkillChip(text: 'Jira'),
+            SkillChip(text: 'Google Analytics'),
+            SkillChip(text: 'Figma'),
+            SkillChip(text: 'Claude'),
+            SkillChip(text: 'n8n'),
+            SkillChip(text: 'Android Studio'),
           ],
         ),
         const SizedBox(height: 40),
@@ -104,8 +106,12 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
   }
 
   // Mobile layout: content above illustration, centered
+  // NOTE: no inner scroll view here - HomePage's SingleChildScrollView already
+  // scrolls this section vertically. A second nested vertical scrollable here
+  // would capture all drag gestures itself and never hand off to the page
+  // scroll, freezing scroll progress inside the Hero section on mobile.
   Widget _buildMobileLayout(BuildContext context) {
-    return SingleChildScrollView(
+    return Padding(
       padding: AppPaddings.sectionPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -148,6 +154,16 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
+    // Only force a fixed, one-viewport-tall Container on tablet/desktop, where
+    // content is laid out side-by-side and fits in one screen. On mobile the
+    // content stacks vertically and is taller than one screen, so it must be
+    // allowed to size to its content and let the page's own scroll view
+    // handle it - see _buildMobileLayout.
+    final bool isMobile = screenSize.width < AppBreakpoints.mobile;
+
+    if (isMobile) {
+      return _buildMobileLayout(context);
+    }
 
     return Container(
       width: screenSize.width,

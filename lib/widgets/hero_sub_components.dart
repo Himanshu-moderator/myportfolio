@@ -91,7 +91,7 @@ class _ReadyToInnovateBadgeState extends State<ReadyToInnovateBadge> with Single
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'Ready to Innovate',
+                  'Ready to Build',
                   style: Theme.of(context).textTheme.labelLarge!.copyWith(
                     color: AppColors.textPrimary.withOpacity((1.0 + opacityBoost * 0.1).clamp(0.0, 1.0)), // Text brightens subtly
                   ),
@@ -105,7 +105,7 @@ class _ReadyToInnovateBadgeState extends State<ReadyToInnovateBadge> with Single
   }
 }
 
-// Main Title: Frontend Developer
+// Main Title: Product Manager
 class MainTitle extends StatelessWidget {
   const MainTitle({super.key});
 
@@ -115,7 +115,7 @@ class MainTitle extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Frontend',
+          'Product',
           style: Theme.of(context).textTheme.displayLarge!.copyWith(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.bold,
@@ -127,7 +127,7 @@ class MainTitle extends StatelessWidget {
           ),
         ),
         Text(
-          'Developer',
+          'Manager',
           style: Theme.of(context).textTheme.displayLarge!.copyWith(
             color: AppColors.primary,
             fontWeight: FontWeight.bold,
@@ -160,9 +160,10 @@ class AnimatedRoleText extends StatelessWidget {
       ),
       child: AnimatedTextKit(
         animatedTexts: [
-          TypewriterAnimatedText('Tech Enthu |', speed: const Duration(milliseconds: 80)),
-          TypewriterAnimatedText('Problem Solver |', speed: const Duration(milliseconds: 80)),
-          TypewriterAnimatedText('Network & Telecom |', speed: const Duration(milliseconds: 80)),
+          TypewriterAnimatedText('Aspiring APM |', speed: const Duration(milliseconds: 80)),
+          TypewriterAnimatedText('Strategic Thinker |', speed: const Duration(milliseconds: 80)),
+          TypewriterAnimatedText('User-First Approach |', speed: const Duration(milliseconds: 80)),
+          TypewriterAnimatedText('AI-Assisted Innovator |', speed: const Duration(milliseconds: 80)),
         ],
         isRepeatingAnimation: true,
         repeatForever: true,
@@ -180,7 +181,7 @@ class DescriptionParagraph extends StatelessWidget {
     return SizedBox(
       width: 500,
       child: Text(
-        'Menciptakan Website Yang Inovatif, Fungsional, dan User-Friendly untuk Solusi Digital.',
+        'Turning user insights into products people actually want - passionate about strategy, execution, and solving real problems through thoughtful product decisions.',
         style: AppTextStyles.bodyText(context).copyWith(fontSize: 18, height: 1.6),
       ),
     );
@@ -351,13 +352,19 @@ class SocialButtons extends StatelessWidget {
         _buildSocialIconButton(
           context,
           FontAwesomeIcons.linkedin,
-          'https://linkedin.com/in/yourprofile', // Replace with your LinkedIn
+          'https://www.linkedin.com/in/himanshu-chatterjee-386684267',
         ),
         const SizedBox(width: 20),
         _buildSocialIconButton(
           context,
-          FontAwesomeIcons.instagram,
-          'https://instagram.com/yourprofile', // Replace with your Instagram
+          FontAwesomeIcons.github,
+          'https://github.com/Himanshu-moderator',
+        ),
+        const SizedBox(width: 20),
+        _buildSocialIconButton(
+          context,
+          FontAwesomeIcons.xTwitter,
+          'https://x.com/', // TODO: update once the X account is live
         ),
       ],
     );

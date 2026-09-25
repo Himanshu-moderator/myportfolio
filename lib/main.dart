@@ -2,10 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:three_d_portfolio/screens/splash_screen.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import 'screens/home_page.dart';
 import 'utils/constants.dart';
 
 void main() {
+  // Default VisibilityDetector sampling is every 500ms, which a fast mobile
+  // fling can skip past entirely, leaving sections stuck at opacity 0 (see
+  // SectionAnimator). Sampling on every frame keeps visibility in sync with
+  // fast scroll gestures.
+  VisibilityDetectorController.instance.updateInterval = Duration.zero;
   runApp(const MyApp());
 }
 

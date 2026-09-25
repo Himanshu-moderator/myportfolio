@@ -12,7 +12,7 @@ import '../widgets/hero_section.dart';
 import '../widgets/navbar.dart';
 import '../widgets/portfolio_section.dart';
 import '../widgets/section_animator.dart';
-import '../widgets/skill_section.dart'; // Import the global background
+import '../widgets/skill_section.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,20 +23,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late AutoScrollController _scrollController;
-  final List<GlobalKey<SectionAnimatorState>> _sectionKeys = List.generate(5, (_) => GlobalKey<SectionAnimatorState>());
+  final List<GlobalKey<SectionAnimatorState>> _sectionKeys =
+  List.generate(5, (_) => GlobalKey<SectionAnimatorState>());
   int _currentSectionIndex = 0;
-  // Use ValueNotifier to pass cursor position to the background painter
-  final ValueNotifier<Offset> _cursorPosition = ValueNotifier<Offset>(Offset.zero); // Stores GLOBAL cursor position
+  final ValueNotifier<Offset> _cursorPosition = ValueNotifier<Offset>(Offset.zero);
 
   @override
   void initState() {
     super.initState();
     _scrollController = AutoScrollController(
-      viewportBoundaryGetter: () => Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+      viewportBoundaryGetter: () =>
+          Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
       axis: Axis.vertical,
     );
 
-    // Trigger animation for the first section (HeroSection) on initial load
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _sectionKeys[0].currentState?.playAnimation();
     });
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     _scrollController.dispose();
-    _cursorPosition.dispose(); // Dispose the ValueNotifier
+    _cursorPosition.dispose();
     super.dispose();
   }
 
@@ -54,35 +54,49 @@ class _HomePageState extends State<HomePage> {
       _currentSectionIndex = index;
     });
     _sectionKeys[index].currentState?.resetAnimation();
-    _scrollController.scrollToIndex(
+    _scrollController
+        .scrollToIndex(
       index,
       preferPosition: AutoScrollPosition.begin,
       duration: AppDurations.scrollAnimation,
-    ).then((_) {
+    )
+        .then((_) {
       _sectionKeys[index].currentState?.playAnimation();
     });
   }
 
   void _onSectionVisibilityChanged(int index, VisibilityInfo info) {
-    if (info.visibleFraction > 0.5 && _sectionKeys[index].currentState?.controller.status != AnimationStatus.completed) {
+    // Play threshold is a small fraction (not >0.5) because visibleFraction is
+    // relative to the SECTION's own height, not the viewport. Sections taller
+    // than one screen (e.g. Portfolio's stacked project cards on mobile) can
+    // scroll fully across the viewport while never showing more than half of
+    // their own total height at once, so a >0.5 requirement could leave them
+    // permanently un-animated. The reset threshold is likewise tightened to
+    // "essentially fully gone" so a tall section can't trigger then get reset
+    // again within the same scroll motion before it settles on screen.
+    if (info.visibleFraction > 0.05 &&
+        _sectionKeys[index].currentState?.controller.status !=
+            AnimationStatus.completed) {
       _sectionKeys[index].currentState?.playAnimation();
       if (_currentSectionIndex != index) {
         setState(() {
           _currentSectionIndex = index;
         });
       }
-    } else if (info.visibleFraction < 0.1 && _sectionKeys[index].currentState?.controller.status == AnimationStatus.completed) {
+    } else if (info.visibleFraction <= 0.0 &&
+        _sectionKeys[index].currentState?.controller.status ==
+            AnimationStatus.completed) {
       _sectionKeys[index].currentState?.resetAnimation();
     }
   }
 
-  // Handle pointer events (mouse hover, touch move)
   void _handlePointerEvent(PointerEvent event) {
-    // IMPORTANT: Use event.position (global) here
-    if (event is PointerHoverEvent || event is PointerMoveEvent || event is PointerDownEvent) {
-      _cursorPosition.value = event.position; // Store GLOBAL position
+    if (event is PointerHoverEvent ||
+        event is PointerMoveEvent ||
+        event is PointerDownEvent) {
+      _cursorPosition.value = event.position;
     } else if (event is PointerExitEvent) {
-      _cursorPosition.value = Offset.zero; // Reset to zero when cursor leaves the entire Listener area
+      _cursorPosition.value = Offset.zero;
     }
   }
 
@@ -94,106 +108,70 @@ class _HomePageState extends State<HomePage> {
         onNavItemTap: _scrollToIndex,
         currentSectionIndex: _currentSectionIndex,
       ),
-      body: Listener( // Capture all pointer events within the body
-        onPointerHover: _handlePointerEvent,
-        onPointerMove: _handlePointerEvent,
-        onPointerDown: _handlePointerEvent, // Capture initial touch/click
-        child: Stack( // Use a Stack to layer the background and content
-          children: [
-            // Global Animated Background (always visible, covers full screen)
-            Positioned.fill(
+      body: Stack(
+        children: [
+          // Background is ignored for hit-testing so it never blocks scrolling
+          IgnorePointer(
+            child: Positioned.fill(
               child: GlobalAnimatedBackground(
-                cursorPosition: _cursorPosition, // Pass the GLOBAL cursor position
+                cursorPosition: _cursorPosition,
               ),
             ),
+          ),
 
-            // Scrollable content on top of the background
-            SingleChildScrollView(
+          // The Listener captures mouse/touch movement for the 3D effect
+          Listener(
+            onPointerHover: _handlePointerEvent,
+            onPointerMove: _handlePointerEvent,
+            onPointerDown: _handlePointerEvent,
+            behavior: HitTestBehavior.translucent,
+            child: SingleChildScrollView(
               controller: _scrollController,
+              // AlwaysScrollableScrollPhysics ensures the scroll view is active
+              // even if the content hasn't fully calculated its height yet
+              physics: const AlwaysScrollableScrollPhysics(
+                parent: BouncingScrollPhysics(),
+              ),
               child: Column(
                 children: [
-                  // Home Section
-                  AutoScrollTag(
-                    key: _sectionKeys[0],
-                    controller: _scrollController,
-                    index: 0,
-                    child: VisibilityDetector(
-                      key: const Key('section_0'),
-                      onVisibilityChanged: (info) => _onSectionVisibilityChanged(0, info),
-                      child: SectionAnimator(
-                        key: _sectionKeys[0],
-                        animationDuration: const Duration(milliseconds: 1000),
-                        slideOffset: const Offset(0, 50),
-                        curve: Curves.easeOutExpo,
-                        child: HeroSection(
-                          onProjectTap: () => _scrollToIndex(3), // Index for PortfolioSection
-                          onContactTap: () => _scrollToIndex(4), // Index for ContactSection
-                          cursorPosition: _cursorPosition, // Pass GLOBAL cursor for local 3D effect in HeroSection
-                        ),
-                      ),
-                    ),
-                  ),
-                  // About Section
-                  AutoScrollTag(
-                    key: _sectionKeys[1],
-                    controller: _scrollController,
-                    index: 1,
-                    child: VisibilityDetector(
-                      key: const Key('section_1'),
-                      onVisibilityChanged: (info) => _onSectionVisibilityChanged(1, info),
-                      child: SectionAnimator(
-                        key: _sectionKeys[1],
-                        child: const AboutSection(),
-                      ),
-                    ),
-                  ),
-                  // Skill Section
-                  AutoScrollTag(
-                    key: _sectionKeys[2],
-                    controller: _scrollController,
-                    index: 2,
-                    child: VisibilityDetector(
-                      key: const Key('section_2'),
-                      onVisibilityChanged: (info) => _onSectionVisibilityChanged(2, info),
-                      child: SectionAnimator(
-                        key: _sectionKeys[2],
-                        child: const SkillSection(),
-                      ),
-                    ),
-                  ),
-                  // Portfolio Section
-                  AutoScrollTag(
-                    key: _sectionKeys[3],
-                    controller: _scrollController,
-                    index: 3,
-                    child: VisibilityDetector(
-                      key: const Key('section_3'),
-                      onVisibilityChanged: (info) => _onSectionVisibilityChanged(3, info),
-                      child: SectionAnimator(
-                        key: _sectionKeys[3],
-                        child: const PortfolioSection(),
-                      ),
-                    ),
-                  ),
-                  // Contact Section
-                  AutoScrollTag(
-                    key: _sectionKeys[4],
-                    controller: _scrollController,
-                    index: 4,
-                    child: VisibilityDetector(
-                      key: const Key('section_4'),
-                      onVisibilityChanged: (info) => _onSectionVisibilityChanged(4, info),
-                      child: SectionAnimator(
-                        key: _sectionKeys[4],
-                        child: const ContactSection(),
-                      ),
-                    ),
-                  ),
+                  // Hero Section
+                  _buildSectionTag(0, HeroSection(
+                    onProjectTap: () => _scrollToIndex(3),
+                    onContactTap: () => _scrollToIndex(4),
+                    cursorPosition: _cursorPosition,
+                  ), isHero: true),
+
+                  // Other Sections
+                  _buildSectionTag(1, const AboutSection()),
+                  _buildSectionTag(2, const SkillSection()),
+                  _buildSectionTag(3, const PortfolioSection()),
+                  _buildSectionTag(4, const ContactSection()),
+
                   const FooterSection(),
                 ],
               ),
             ),
-          ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionTag(int index, Widget child, {bool isHero = false}) {
+    return AutoScrollTag(
+      key: _sectionKeys[index],
+      controller: _scrollController,
+      index: index,
+      child: VisibilityDetector(
+        key: Key('section_$index'),
+        onVisibilityChanged: (info) => _onSectionVisibilityChanged(index, info),
+        child: SectionAnimator(
+          key: _sectionKeys[index],
+          // Hero section uses your custom duration and curve, others use defaults
+          animationDuration: isHero ? const Duration(milliseconds: 1000) : const Duration(milliseconds: 800),
+          slideOffset: isHero ? const Offset(0, 50) : const Offset(0, 30),
+          curve: isHero ? Curves.easeOutExpo : Curves.easeInOut,
+          child: child,
         ),
       ),
     );

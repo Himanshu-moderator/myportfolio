@@ -164,23 +164,23 @@ class AppData {
   ];
 
   static final List<SocialLink> socialLinks = [
-    SocialLink(icon: FontAwesomeIcons.linkedin, url: 'https://linkedin.com/in/ekizulfar'),
-    SocialLink(icon: FontAwesomeIcons.instagram, url: 'https://instagram.com/ekizulfar'),
-    SocialLink(icon: FontAwesomeIcons.github, url: 'https://github.com/ekizulfar'),
+    SocialLink(icon: FontAwesomeIcons.linkedin, url: 'https://www.linkedin.com/in/himanshu-chatterjee-386684267'),
+    SocialLink(icon: FontAwesomeIcons.github, url: 'https://github.com/Himanshu-moderator'),
+    SocialLink(icon: FontAwesomeIcons.xTwitter, url: 'https://x.com/'), // TODO: update once the X account is live
   ];
 
   static final List<Skill> skills = [
-    Skill(name: 'HTML5', icon: FontAwesomeIcons.html5),
-    Skill(name: 'CSS3', icon: FontAwesomeIcons.css3Alt),
-    Skill(name: 'JavaScript', icon: FontAwesomeIcons.js),
-    Skill(name: 'React.js', icon: FontAwesomeIcons.react),
-    Skill(name: 'Node.js', icon: FontAwesomeIcons.nodeJs),
-    Skill(name: 'Python', icon: FontAwesomeIcons.python),
-    Skill(name: 'Flutter', icon: FontAwesomeIcons.mobileAlt), // Using mobileAlt as general icon for Flutter/Dart
-    Skill(name: 'Dart', icon: FontAwesomeIcons.dartLang), // Custom or a placeholder icon
+    Skill(name: 'Product Strategy', icon: FontAwesomeIcons.chessKnight),
+    Skill(name: 'Agile / Scrum', icon: FontAwesomeIcons.arrowsSpin),
     Skill(name: 'SQL', icon: FontAwesomeIcons.database),
-    Skill(name: 'MongoDB', icon: FontAwesomeIcons.leaf), // Icon for MongoDB
-    Skill(name: 'Tailwind CSS', icon: FontAwesomeIcons.wind), // Icon for Tailwind
-    Skill(name: 'Git', icon: FontAwesomeIcons.gitAlt),
+    Skill(name: 'Figma', icon: FontAwesomeIcons.figma),
+    Skill(name: 'Jira', icon: FontAwesomeIcons.jira),
+    Skill(name: 'Data Analytics', icon: FontAwesomeIcons.chartLine),
+    Skill(name: 'Design Thinking', icon: FontAwesomeIcons.brain),
+    Skill(name: 'Android Studio', icon: FontAwesomeIcons.android),
+    Skill(name: 'Dart', icon: FontAwesomeIcons.dartLang),
+    Skill(name: 'Flutter', icon: FontAwesomeIcons.flutter),
+    Skill(name: 'Trello', icon: FontAwesomeIcons.trello),
+    Skill(name: 'Google Analytics', icon: FontAwesomeIcons.google),
   ];
 }
