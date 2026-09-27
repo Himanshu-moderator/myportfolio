@@ -11,7 +11,12 @@ class AboutSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: AppPaddings.sectionPadding,
+      // sectionPadding is vertical-only; this section's content Row uses
+      // Expanded, which stretches edge-to-edge across the full width, so it
+      // needs its own horizontal padding to avoid sitting flush against the
+      // screen edge (Skills/Portfolio don't need this - their content sizes
+      // to a max-width and is centered by their parent Column instead).
+      padding: AppPaddings.sectionPadding + const EdgeInsets.symmetric(horizontal: 24.0),
       // REMOVED: color: AppColors.background,
       // We want the global animated background to show through, so no solid color here.
       child: ResponsiveLayout(
