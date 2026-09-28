@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:animated_text_kit/animated_text_kit.dart'; // Import for typing effect
 import 'dart:math';
-import '../utils/constants.dart';
+import 'package:three_d_portfolio/utils/constants.dart';
+import 'package:three_d_portfolio/personal_data/portfolio_content.dart';
 import 'home_page.dart'; // For pi for subtle icon animations
 
 class SplashScreen extends StatefulWidget {
@@ -239,7 +240,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                     child: Transform.translate(
                       offset: _textWelcomeSlide.value * (MediaQuery.of(context).size.width / 4), // Scale offset by fraction of screen width
                       child: Text(
-                        'Welcome To My',
+                        SplashContent.welcomeLine1,
                         style: Theme.of(context).textTheme.displayMedium!.copyWith(
                           color: AppColors.textPrimary,
                           fontWeight: FontWeight.bold,
@@ -269,7 +270,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                     child: Transform.translate(
                       offset: _textPortfolioWebsiteSlide.value * (MediaQuery.of(context).size.width / 4), // Scale offset by fraction of screen width
                       child: Text(
-                        'Portfolio Website', // Combined text
+                        SplashContent.welcomeLine2,
                         style: Theme.of(context).textTheme.displayLarge!.copyWith(
                           color: AppColors.primary, // Distinct color
                           fontWeight: FontWeight.bold,
@@ -321,7 +322,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                             child: AnimatedTextKit(
                               animatedTexts: [
                                 TypewriterAnimatedText(
-                                  "Himanshu's Portfolio",
+                                  SplashContent.typedTitle,
                                   speed: const Duration(milliseconds: 80), // Slightly faster typing speed
                                   curve: Curves.easeInCubic,
                                 ),

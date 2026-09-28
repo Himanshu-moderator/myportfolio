@@ -1,4 +1,9 @@
-// lib/utils/data.dart
+// lib/personal_data/portfolio_content.dart
+//
+// Everything in this file is your own editable content: contact links,
+// projects, certificates, skills, and every piece of text shown on screen
+// (hero, about, navbar, footer). Change values here to update the site -
+// no need to touch any file outside this folder for content changes.
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -183,4 +188,101 @@ class AppData {
     Skill(name: 'Trello', icon: FontAwesomeIcons.trello),
     Skill(name: 'Google Analytics', icon: FontAwesomeIcons.google),
   ];
+}
+
+// --- Site branding: shown in the navbar and footer ---
+class SiteBranding {
+  // Short/stylized form - used for the desktop navbar brand and the footer
+  static const String formalName = 'HC.';
+  // Full name - used for the mobile navbar brand
+  static const String informalName = 'Himanshu.';
+  static const String footerTagline = 'Built with Flutter.';
+}
+
+// --- Hero section content ---
+class HeroContent {
+  static const String badgeText = 'Ready to Build';
+  static const String titleLine1 = 'Product';
+  static const String titleLine2 = 'Manager';
+
+  // Rotates in the typewriter animation under the title
+  static const List<String> roleTexts = [
+    'Aspiring APM',
+    'Strategic Thinker',
+    'User-First Approach',
+    'AI-Assisted Innovator',
+  ];
+
+  static const String description =
+      'Turning user insights into products people actually want - passionate '
+      'about strategy, execution, and solving real problems through '
+      'thoughtful product decisions.';
+
+  // Tool/skill chips shown under the description
+  static const List<String> skillChips = [
+    'Jira',
+    'Google Analytics',
+    'Figma',
+    'Claude',
+    'n8n',
+    'Android Studio',
+  ];
+}
+
+// --- About section content ---
+class AboutContent {
+  static const String sectionTitle = 'About Me';
+  static const String cardHeading = 'A Little Bit About Me';
+  static const String profileImageAsset = 'assets/profile.webp';
+
+  static const List<String> paragraphs = [
+    "I'm Himanshu, an aspiring Associate Product Manager with a Product "
+        "Management certification from Airtribe. I've been focused on turning "
+        'that foundation into real-world impact, built on a genuine '
+        'curiosity for how products work and why users behave the way they do.',
+    "I'm especially drawn to fintech and fast commerce, where speed, trust, "
+        'and user experience all have to work together under pressure. I '
+        'focus on translating user needs into clear product decisions - from '
+        'problem definition to roadmap prioritization - using tools like '
+        'Jira, Figma, and SQL to stay close to both the user and the data.',
+    'My interest in psychology shapes how I think about products - '
+        'understanding why people behave the way they do is, to me, the real '
+        "foundation of good product decisions. I'm a continuous learner, "
+        'always exploring new frameworks for product thinking, and how AI '
+        'can make both products and teams work smarter.',
+    'Outside of product, I follow the forex markets, love traveling to new '
+        "places, and enjoy photography along the way. I'm always open to new "
+        "challenges and conversations - let's turn the next big idea into a "
+        'product people love.',
+  ];
+}
+
+// --- Skills section content ---
+class SkillsContent {
+  static const String sectionTitle = 'My Skills';
+}
+
+// --- Portfolio section content ---
+class PortfolioContentText {
+  static const String sectionTitle = 'Portfolio Showcase';
+  static const String sectionSubtitle =
+      'Explore my journey through projects, certifications, and technical '
+      'expertise. Each section represents a milestone in my continuous '
+      'learning path.';
+}
+
+// --- Contact section content ---
+class ContactContent {
+  static const String sectionTitle = 'Get In Touch';
+  static const String introText =
+      'Have a project in mind or just want to chat? Feel free to reach out!';
+  static const String sendButtonLabel = 'Send Message';
+  static const String socialPromptText = 'Or connect with me on social media:';
+}
+
+// --- Splash screen content ---
+class SplashContent {
+  static const String welcomeLine1 = 'Welcome To My';
+  static const String welcomeLine2 = 'Portfolio Website';
+  static const String typedTitle = "Himanshu's Portfolio";
 }

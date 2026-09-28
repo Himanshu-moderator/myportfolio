@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../utils/constants.dart';
+import 'package:three_d_portfolio/utils/constants.dart';
+import 'package:three_d_portfolio/personal_data/portfolio_content.dart';
 
 class FooterSection extends StatelessWidget {
   const FooterSection({super.key});
@@ -14,13 +15,13 @@ class FooterSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            '© ${DateTime.now().year} HC. All rights reserved.',
+            '© ${DateTime.now().year} ${SiteBranding.formalName} All rights reserved.',
             style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.textSecondary),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 10),
           Text(
-            'Built with Flutter.',
+            SiteBranding.footerTagline,
             style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.textSecondary),
             textAlign: TextAlign.center,
           ),

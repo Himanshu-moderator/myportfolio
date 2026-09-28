@@ -3,16 +3,16 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import '../utils/constants.dart';
-import '../widgets/about_section.dart';
-import '../widgets/contact_section.dart';
-import '../widgets/footer_section.dart';
-import '../widgets/global_animated_background.dart';
-import '../widgets/hero_section.dart';
-import '../widgets/navbar.dart';
-import '../widgets/portfolio_section.dart';
-import '../widgets/section_animator.dart';
-import '../widgets/skill_section.dart';
+import 'package:three_d_portfolio/utils/constants.dart';
+import 'package:three_d_portfolio/screens/about_section.dart';
+import 'package:three_d_portfolio/screens/contact_section.dart';
+import 'package:three_d_portfolio/widgets/footer_section.dart';
+import 'package:three_d_portfolio/widgets/global_animated_background.dart';
+import 'package:three_d_portfolio/hero/hero_section.dart';
+import 'package:three_d_portfolio/widgets/navbar.dart';
+import 'package:three_d_portfolio/screens/portfolio_section.dart';
+import 'package:three_d_portfolio/widgets/section_animator.dart';
+import 'package:three_d_portfolio/screens/skill_section.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

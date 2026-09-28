@@ -1,14 +1,13 @@
-// lib/widgets/hero_section.dart
+// lib/hero/hero_section.dart
 import 'package:flutter/material.dart';
-import 'package:animated_text_kit/animated_text_kit.dart'; // Still needed for AnimatedRoleText in HeroSubComponents
-import 'package:three_d_portfolio/utils/constants.dart'; // Corrected import
-import 'package:three_d_portfolio/widgets/responsive_layout.dart'; // Assuming this is present
-import 'package:three_d_portfolio/widgets/vector_3d_for_animation.dart'; // Assuming this is present and defines Vector3
-import 'package:url_launcher/url_launcher.dart'; // Still needed for launching URLs in HeroSubComponents
+import 'package:three_d_portfolio/utils/constants.dart';
+import 'package:three_d_portfolio/personal_data/portfolio_content.dart';
+import 'package:three_d_portfolio/widgets/responsive_layout.dart';
+import 'package:three_d_portfolio/widgets/vector_3d_for_animation.dart';
 import 'dart:math'; // Needed for mathematical operations like pi, cos, sin
 
-// Import the new file containing refactored components
-import 'package:three_d_portfolio/widgets/hero_sub_components.dart'; // Corrected import
+// Import the file containing refactored hero sub-components
+import 'package:three_d_portfolio/hero/hero_sub_components.dart';
 
 // --- HeroSection: The main widget that holds content and the 3D animation ---
 class HeroSection extends StatefulWidget {
@@ -58,13 +57,8 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
         Wrap(
           spacing: 15.0,
           runSpacing: 15.0,
-          children: const [
-            SkillChip(text: 'Jira'),
-            SkillChip(text: 'Google Analytics'),
-            SkillChip(text: 'Figma'),
-            SkillChip(text: 'Claude'),
-            SkillChip(text: 'n8n'),
-            SkillChip(text: 'Android Studio'),
+          children: [
+            for (final chip in HeroContent.skillChips) SkillChip(text: chip),
           ],
         ),
         const SizedBox(height: 40),

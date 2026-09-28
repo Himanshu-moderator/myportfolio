@@ -1,9 +1,10 @@
-// lib/widgets/about_section.dart
+// lib/screens/about_section.dart
 import 'package:flutter/material.dart';
 import 'package:three_d_portfolio/widgets/responsive_layout.dart';
 import 'package:three_d_portfolio/widgets/section_title.dart' hide AppColors, AppTextStyles, AppPaddings;
 
-import '../utils/constants.dart';
+import 'package:three_d_portfolio/utils/constants.dart';
+import 'package:three_d_portfolio/personal_data/portfolio_content.dart';
 
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
@@ -46,32 +47,17 @@ class AboutSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'A Little Bit About Me',
+            AboutContent.cardHeading,
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(
               color: AppColors.primary, // Highlighted text
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 16),
-          Text(
-            'I\'m Himanshu, an aspiring Associate Product Manager with a Product Management certification from Airtribe. I\'ve been focused on turning that foundation into real-world impact, built on a genuine curiosity for how products work and why users behave the way they do.',
-            style: AppTextStyles.bodyText(context),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            'I\'m especially drawn to fintech and fast commerce, where speed, trust, and user experience all have to work together under pressure. I focus on translating user needs into clear product decisions - from problem definition to roadmap prioritization - using tools like Jira, Figma, and SQL to stay close to both the user and the data.',
-            style: AppTextStyles.bodyText(context),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            'My interest in psychology shapes how I think about products - understanding why people behave the way they do is, to me, the real foundation of good product decisions. I\'m a continuous learner, always exploring new frameworks for product thinking, and how AI can make both products and teams work smarter.',
-            style: AppTextStyles.bodyText(context),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            'Outside of product, I follow the forex markets, love traveling to new places, and enjoy photography along the way. I\'m always open to new challenges and conversations - let\'s turn the next big idea into a product people love.',
-            style: AppTextStyles.bodyText(context),
-          ),
+          for (int i = 0; i < AboutContent.paragraphs.length; i++) ...[
+            if (i > 0) const SizedBox(height: 10),
+            Text(AboutContent.paragraphs[i], style: AppTextStyles.bodyText(context)),
+          ],
         ],
       ),
     );
@@ -95,7 +81,7 @@ class AboutSection extends StatelessWidget {
       ),
       child: ClipOval(
         child: Image.asset(
-          'assets/profile.webp',
+          AboutContent.profileImageAsset,
           width: 250,
           height: 250,
           fit: BoxFit.cover,
@@ -108,7 +94,7 @@ class AboutSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const SectionTitle(title: 'About Me'),
+        const SectionTitle(title: AboutContent.sectionTitle),
         const SizedBox(height: 40),
         _buildProfileImage(context),
         const SizedBox(height: 40),
@@ -120,7 +106,7 @@ class AboutSection extends StatelessWidget {
   Widget _buildTabletAndDesktopLayout(BuildContext context, {bool isTablet = false}) {
     return Column( // Keep Column as parent to contain SectionTitle
       children: [
-        const SectionTitle(title: 'About Me'),
+        const SectionTitle(title: AboutContent.sectionTitle),
         const SizedBox(height: 40),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -1,12 +1,12 @@
-// lib/widgets/hero_sub_components.dart
+// lib/hero/hero_sub_components.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../utils/constants.dart';
-import 'dart:math'; // For clamping functions
+import 'package:three_d_portfolio/utils/constants.dart';
+import 'package:three_d_portfolio/personal_data/portfolio_content.dart';
 
 // --- Reusable Hero Section Components ---
 
@@ -91,7 +91,7 @@ class _ReadyToInnovateBadgeState extends State<ReadyToInnovateBadge> with Single
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'Ready to Build',
+                  HeroContent.badgeText,
                   style: Theme.of(context).textTheme.labelLarge!.copyWith(
                     color: AppColors.textPrimary.withOpacity((1.0 + opacityBoost * 0.1).clamp(0.0, 1.0)), // Text brightens subtly
                   ),
@@ -115,7 +115,7 @@ class MainTitle extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Product',
+          HeroContent.titleLine1,
           style: Theme.of(context).textTheme.displayLarge!.copyWith(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.bold,
@@ -127,7 +127,7 @@ class MainTitle extends StatelessWidget {
           ),
         ),
         Text(
-          'Manager',
+          HeroContent.titleLine2,
           style: Theme.of(context).textTheme.displayLarge!.copyWith(
             color: AppColors.primary,
             fontWeight: FontWeight.bold,
@@ -160,10 +160,8 @@ class AnimatedRoleText extends StatelessWidget {
       ),
       child: AnimatedTextKit(
         animatedTexts: [
-          TypewriterAnimatedText('Aspiring APM |', speed: const Duration(milliseconds: 80)),
-          TypewriterAnimatedText('Strategic Thinker |', speed: const Duration(milliseconds: 80)),
-          TypewriterAnimatedText('User-First Approach |', speed: const Duration(milliseconds: 80)),
-          TypewriterAnimatedText('AI-Assisted Innovator |', speed: const Duration(milliseconds: 80)),
+          for (final role in HeroContent.roleTexts)
+            TypewriterAnimatedText('$role |', speed: const Duration(milliseconds: 80)),
         ],
         isRepeatingAnimation: true,
         repeatForever: true,
@@ -181,7 +179,7 @@ class DescriptionParagraph extends StatelessWidget {
     return SizedBox(
       width: 500,
       child: Text(
-        'Turning user insights into products people actually want - passionate about strategy, execution, and solving real problems through thoughtful product decisions.',
+        HeroContent.description,
         style: AppTextStyles.bodyText(context).copyWith(fontSize: 18, height: 1.6),
       ),
     );
@@ -346,27 +344,13 @@ class SocialButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _buildSocialIconButton(
-          context,
-          FontAwesomeIcons.linkedin,
-          'https://www.linkedin.com/in/himanshu-chatterjee-386684267',
-        ),
-        const SizedBox(width: 20),
-        _buildSocialIconButton(
-          context,
-          FontAwesomeIcons.github,
-          'https://github.com/Himanshu-moderator',
-        ),
-        const SizedBox(width: 20),
-        _buildSocialIconButton(
-          context,
-          FontAwesomeIcons.xTwitter,
-          'https://x.com/', // TODO: update once the X account is live
-        ),
-      ],
+    // Sourced from AppData.socialLinks (personal_data/portfolio_content.dart)
+    // so there is a single place to update social links across the site.
+    return Wrap(
+      spacing: 20,
+      children: AppData.socialLinks
+          .map((link) => _buildSocialIconButton(context, link.icon, link.url))
+          .toList(),
     );
   }
 }

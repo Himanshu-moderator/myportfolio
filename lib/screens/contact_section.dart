@@ -1,11 +1,11 @@
-// lib/widgets/contact_section.dart
+// lib/screens/contact_section.dart
 import 'package:flutter/material.dart';
 import 'package:three_d_portfolio/widgets/section_title.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../utils/constants.dart';
-import '../utils/data.dart';
+import 'package:three_d_portfolio/utils/constants.dart';
+import 'package:three_d_portfolio/personal_data/portfolio_content.dart';
 
 class ContactSection extends StatelessWidget {
   const ContactSection({super.key});
@@ -20,7 +20,7 @@ class ContactSection extends StatelessWidget {
       // REMOVED: color: AppColors.background,
       child: Column(
         children: [
-          const SectionTitle(title: 'Get In Touch'),
+          const SectionTitle(title: ContactContent.sectionTitle),
           const SizedBox(height: 40),
           Container(
             constraints: const BoxConstraints(maxWidth: 800), // Constrain width for form
@@ -41,7 +41,7 @@ class ContactSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Have a project in mind or just want to chat? Feel free to reach out!',
+                  ContactContent.introText,
                   style: AppTextStyles.bodyText(context).copyWith(
                     color: AppColors.textPrimary,
                   ),
@@ -122,7 +122,7 @@ class ContactSection extends StatelessWidget {
                       side: BorderSide(color: AppColors.border.withOpacity(0.5), width: 1),
                     ),
                     child: Text(
-                      'Send Message',
+                      ContactContent.sendButtonLabel,
                       style: AppTextStyles.buttonText(context).copyWith(
                         color: AppColors.textPrimary,
                       ),
@@ -132,7 +132,7 @@ class ContactSection extends StatelessWidget {
                 const SizedBox(height: 40),
                 Center(
                   child: Text(
-                    'Or connect with me on social media:',
+                    ContactContent.socialPromptText,
                     style: AppTextStyles.bodyText(context).copyWith(color: AppColors.textPrimary),
                   ),
                 ),

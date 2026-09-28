@@ -1,11 +1,11 @@
-// lib/widgets/skill_section.dart
+// lib/screens/skill_section.dart
 import 'package:flutter/material.dart';
 import 'package:three_d_portfolio/widgets/responsive_layout.dart';
 import 'package:three_d_portfolio/widgets/section_title.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // For skill icons
 
-import '../utils/constants.dart';
-import '../utils/data.dart';
+import 'package:three_d_portfolio/utils/constants.dart';
+import 'package:three_d_portfolio/personal_data/portfolio_content.dart';
 
 class SkillSection extends StatelessWidget {
   const SkillSection({super.key});
@@ -17,7 +17,7 @@ class SkillSection extends StatelessWidget {
       // REMOVED: color: AppColors.background,
       child: Column(
         children: [
-          const SectionTitle(title: 'My Skills'),
+          const SectionTitle(title: SkillsContent.sectionTitle),
           ResponsiveLayout(
             mobileBody: _buildSkillGrid(context, 2), // 2 columns for mobile
             tabletBody: _buildSkillGrid(context, 3), // 3 columns for tablet

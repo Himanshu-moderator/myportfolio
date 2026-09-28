@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:three_d_portfolio/widgets/responsive_layout.dart';
-import '../utils/constants.dart';
-import '../utils/data.dart';
+import 'package:three_d_portfolio/utils/constants.dart';
+import 'package:three_d_portfolio/personal_data/portfolio_content.dart';
 class CustomNavBar extends StatefulWidget implements PreferredSizeWidget {
   final AutoScrollController scrollController;
   final Function(int) onNavItemTap;
@@ -70,7 +70,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
         GestureDetector(
           onTap: () => widget.onNavItemTap(0), // Scroll to home
           child: Text(
-            'HC.',
+            SiteBranding.formalName,
             style: Theme.of(context).textTheme.headlineMedium!.copyWith(
               color: AppColors.primary,
               fontWeight: FontWeight.bold,
@@ -105,7 +105,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
         GestureDetector(
           onTap: () => widget.onNavItemTap(0), // Scroll to home
           child: Text(
-            'Himanshu.',
+            SiteBranding.informalName,
             style: Theme.of(context).textTheme.headlineMedium!.copyWith(
               color: AppColors.primary,
               fontWeight: FontWeight.bold,

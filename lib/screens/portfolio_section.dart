@@ -1,12 +1,12 @@
-// lib/widgets/portfolio_section.dart
+// lib/screens/portfolio_section.dart
 import 'package:flutter/material.dart';
 import 'package:three_d_portfolio/widgets/responsive_layout.dart';
 import 'package:three_d_portfolio/widgets/section_title.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../utils/constants.dart';
-import '../utils/data.dart'; // Ensure this is imported for Project and Certificate models
+import 'package:three_d_portfolio/utils/constants.dart';
+import 'package:three_d_portfolio/personal_data/portfolio_content.dart'; // Project and Certificate models
 
 // Enum to define the active tab
 enum PortfolioTab { projects, certificates } // Removed techStack
@@ -109,9 +109,9 @@ class _PortfolioSectionState extends State<PortfolioSection> with SingleTickerPr
       // REMOVED: color: AppColors.background, // This line was causing the opacity issue
       child: Column(
         children: [
-          const SectionTitle(title: 'Portfolio Showcase'),
+          const SectionTitle(title: PortfolioContentText.sectionTitle),
           Text(
-            'Explore my journey through projects, certifications, and technical expertise. Each section represents a milestone in my continuous learning path.',
+            PortfolioContentText.sectionSubtitle,
             style: AppTextStyles.bodyText(context),
             textAlign: TextAlign.center,
           ),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:three_d_portfolio/screens/splash_screen.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import 'screens/home_page.dart';
 import 'utils/constants.dart';
 
 void main() {
@@ -84,35 +83,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// lib/utils/constants.dart
-
-
-// lib/utils/data.dart
-
-
-// lib/widgets/responsive_layout.dart
-
-
-// lib/widgets/section_title.dart
-
-
-// lib/widgets/navbar.dart
-
-
-// lib/widgets/hero_section.dart
-
-
-// lib/widgets/about_section.dart
-
-
-// lib/widgets/skill_section.dart
-
-
-// lib/widgets/portfolio_section.dart
-
-
-// lib/widgets/contact_section.dart
 
 
 // lib/widgets/footer_section.dart
