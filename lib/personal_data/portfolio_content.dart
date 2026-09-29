@@ -221,10 +221,9 @@ class HeroContent {
   // Tool/skill chips shown under the description
   static const List<String> skillChips = [
     'Jira',
+    'Trello',
     'Google Analytics',
     'Figma',
-    'Claude',
-    'n8n',
     'Android Studio',
   ];
 }
