@@ -1,57 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:three_d_portfolio/widgets/responsive_layout.dart';
 import 'package:three_d_portfolio/utils/constants.dart';
 import 'package:three_d_portfolio/personal_data/portfolio_content.dart';
-class CustomNavBar extends StatefulWidget implements PreferredSizeWidget {
-  final AutoScrollController scrollController;
+class CustomNavBar extends StatelessWidget implements PreferredSizeWidget {
   final Function(int) onNavItemTap;
   final int currentSectionIndex;
 
   const CustomNavBar({
     super.key,
-    required this.scrollController,
     required this.onNavItemTap,
     required this.currentSectionIndex,
   });
 
   @override
-  State<CustomNavBar> createState() => _CustomNavBarState();
-
-  @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
-
-class _CustomNavBarState extends State<CustomNavBar> {
-  bool _isScrolled = false;
-
-  @override
-  void initState() {
-    super.initState();
-    widget.scrollController.addListener(_scrollListener);
-  }
-
-  @override
-  void dispose() {
-    widget.scrollController.removeListener(_scrollListener);
-    super.dispose();
-  }
-
-  void _scrollListener() {
-    // Only update state if _isScrolled state changes
-    final newIsScrolled = widget.scrollController.offset > 0;
-    if (newIsScrolled != _isScrolled) {
-      setState(() {
-        _isScrolled = newIsScrolled;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
+    // With paged navigation there's no continuous scroll offset to watch -
+    // "scrolled away from the top" is simply "not on the first (Hero) page".
+    final bool isScrolled = currentSectionIndex != 0;
     return AppBar(
-      backgroundColor: _isScrolled ? AppColors.cardBackground.withOpacity(0.9) : AppColors.background.withOpacity(0.8),
-      elevation: _isScrolled ? 4 : 0,
+      backgroundColor: isScrolled ? AppColors.cardBackground.withOpacity(0.9) : AppColors.background.withOpacity(0.8),
+      elevation: isScrolled ? 4 : 0,
       centerTitle: true,
       title: ResponsiveLayout(
         mobileBody: _buildMobileNavBar(context),
@@ -68,7 +39,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GestureDetector(
-          onTap: () => widget.onNavItemTap(0), // Scroll to home
+          onTap: () => onNavItemTap(0), // Scroll to home
           child: Text(
             SiteBranding.formalName,
             style: Theme.of(context).textTheme.headlineMedium!.copyWith(
@@ -80,9 +51,9 @@ class _CustomNavBarState extends State<CustomNavBar> {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: List.generate(AppData.navItems.length, (index) {
-            final isSelected = widget.currentSectionIndex == index;
+            final isSelected = currentSectionIndex == index;
             return TextButton(
-              onPressed: () => widget.onNavItemTap(index),
+              onPressed: () => onNavItemTap(index),
               style: TextButton.styleFrom(
                 foregroundColor: isSelected ? AppColors.accent : AppColors.textPrimary,
                 shape: RoundedRectangleBorder(
@@ -103,7 +74,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GestureDetector(
-          onTap: () => widget.onNavItemTap(0), // Scroll to home
+          onTap: () => onNavItemTap(0), // Scroll to home
           child: Text(
             SiteBranding.informalName,
             style: Theme.of(context).textTheme.headlineMedium!.copyWith(
@@ -114,14 +85,14 @@ class _CustomNavBarState extends State<CustomNavBar> {
         ),
         PopupMenuButton<int>(
           icon: const Icon(Icons.menu, color: AppColors.textPrimary),
-          onSelected: widget.onNavItemTap,
+          onSelected: onNavItemTap,
           itemBuilder: (context) => List.generate(AppData.navItems.length, (index) {
             return PopupMenuItem<int>(
               value: index,
               child: Text(
                 AppData.navItems[index],
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: widget.currentSectionIndex == index ? AppColors.accent : AppColors.textPrimary,
+                  color: currentSectionIndex == index ? AppColors.accent : AppColors.textPrimary,
                 ),
               ),
             );
