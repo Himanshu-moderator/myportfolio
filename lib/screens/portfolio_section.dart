@@ -18,19 +18,24 @@ class PortfolioSection extends StatefulWidget {
   State<PortfolioSection> createState() => _PortfolioSectionState();
 }
 
-class _PortfolioSectionState extends State<PortfolioSection> with SingleTickerProviderStateMixin {
+class _PortfolioSectionState extends State<PortfolioSection>
+    with SingleTickerProviderStateMixin {
   late PortfolioTab _selectedTab;
-  late AnimationController _tabSwitchController; // Controller for tab content fade
+  late AnimationController
+  _tabSwitchController; // Controller for tab content fade
 
   @override
   void initState() {
     super.initState();
     _selectedTab = PortfolioTab.projects; // Default to projects tab
     _tabSwitchController = AnimationController(
-      duration: const Duration(milliseconds: 200), // Swift animation for tab content fade
+      duration: const Duration(
+        milliseconds: 200,
+      ), // Swift animation for tab content fade
       vsync: this,
     );
-    _tabSwitchController.forward(); // Play animation initially for the default tab
+    _tabSwitchController
+        .forward(); // Play animation initially for the default tab
   }
 
   @override
@@ -56,24 +61,35 @@ class _PortfolioSectionState extends State<PortfolioSection> with SingleTickerPr
     required IconData icon,
   }) {
     final bool isSelected = _selectedTab == tab;
-    return Expanded( // Ensures buttons take equal space in the row
+    return Expanded(
+      // Ensures buttons take equal space in the row
       child: GestureDetector(
         onTap: () => _switchTab(tab),
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200), // Swift duration for smoother visual transition
+          duration: const Duration(
+            milliseconds: 200,
+          ), // Swift duration for smoother visual transition
           curve: Curves.easeInOut,
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
           decoration: BoxDecoration(
             // Only the selected tab gets a background gradient
             gradient: isSelected
                 ? LinearGradient(
-              colors: [AppColors.primary, AppColors.accent], // Gradient for the selected state
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-            )
+                    colors: [
+                      AppColors.primary,
+                      AppColors.accent,
+                    ], // Gradient for the selected state
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  )
                 : null, // No gradient for unselected
-            color: isSelected ? null : Colors.transparent, // Transparent for unselected, or handled by gradient
-            borderRadius: BorderRadius.circular(100), // Fully rounded corners for the slider
+            color: isSelected
+                ? null
+                : Colors
+                      .transparent, // Transparent for unselected, or handled by gradient
+            borderRadius: BorderRadius.circular(
+              100,
+            ), // Fully rounded corners for the slider
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -81,15 +97,24 @@ class _PortfolioSectionState extends State<PortfolioSection> with SingleTickerPr
               FaIcon(
                 icon,
                 size: 20,
-                color: isSelected ? AppColors.background : AppColors.textPrimary, // Icon color changes with selection
+                color: isSelected
+                    ? AppColors.background
+                    : AppColors
+                          .textPrimary, // Icon color changes with selection
               ),
               const SizedBox(width: 8),
-              Flexible( // Use Flexible to prevent text overflow on smaller screens
+              Flexible(
+                // Use Flexible to prevent text overflow on smaller screens
                 child: Text(
                   label,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: isSelected ? AppColors.background : AppColors.textPrimary, // Text color changes with selection
-                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                    color: isSelected
+                        ? AppColors.background
+                        : AppColors
+                              .textPrimary, // Text color changes with selection
+                    fontWeight: isSelected
+                        ? FontWeight.bold
+                        : FontWeight.normal,
                   ),
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
@@ -118,18 +143,31 @@ class _PortfolioSectionState extends State<PortfolioSection> with SingleTickerPr
           const SizedBox(height: 40),
           // Tab Selection Buttons (Toggle Switch Style)
           Container(
-            constraints: const BoxConstraints(maxWidth: 400), // Constrain the width of the tab switcher
-            padding: const EdgeInsets.all(5), // Padding inside the main container, creates the "border" around the slider
+            constraints: const BoxConstraints(
+              maxWidth: 400,
+            ), // Constrain the width of the tab switcher
+            padding: const EdgeInsets.all(
+              5,
+            ), // Padding inside the main container, creates the "border" around the slider
             decoration: BoxDecoration(
               // Background gradient for the toggle button itself (outer container)
               gradient: LinearGradient(
-                colors: [AppColors.cardBackground.withOpacity(0.9), AppColors.background], // Darker gradient for the toggle
+                colors: [
+                  AppColors.cardBackground.withOpacity(0.9),
+                  AppColors.background,
+                ], // Darker gradient for the toggle
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-              borderRadius: BorderRadius.circular(100), // Fully rounded corners for the outer container
-              border: Border.all(color: AppColors.border.withOpacity(0.8), width: 1), // Prominent border
-              boxShadow: [ // Subtle shadow for depth
+              borderRadius: BorderRadius.circular(
+                100,
+              ), // Fully rounded corners for the outer container
+              border: Border.all(
+                color: AppColors.border.withOpacity(0.8),
+                width: 1,
+              ), // Prominent border
+              boxShadow: [
+                // Subtle shadow for depth
                 BoxShadow(
                   color: Colors.black.withOpacity(0.3),
                   blurRadius: 15,
@@ -160,11 +198,18 @@ class _PortfolioSectionState extends State<PortfolioSection> with SingleTickerPr
             animation: _tabSwitchController,
             builder: (context, child) {
               return FadeTransition(
-                opacity: Tween<double>(begin: 0.0, end: 1.0).animate(_tabSwitchController),
+                opacity: Tween<double>(
+                  begin: 0.0,
+                  end: 1.0,
+                ).animate(_tabSwitchController),
                 child: _buildCurrentTabContent(context),
               );
             },
           ),
+          // Breathing room at the end of the section, so the last row of
+          // cards isn't flush against the screen edge where the scroll
+          // transition to the next section triggers.
+          const SizedBox(height: 100),
         ],
       ),
     );
@@ -182,14 +227,19 @@ class _PortfolioSectionState extends State<PortfolioSection> with SingleTickerPr
         return ResponsiveLayout(
           mobileBody: _buildCertificateGrid(context, 1), // 1 column for mobile
           tabletBody: _buildCertificateGrid(context, 2), // 2 columns for tablet
-          desktopBody: _buildCertificateGrid(context, 3), // 3 columns for desktop
+          desktopBody: _buildCertificateGrid(
+            context,
+            3,
+          ), // 3 columns for desktop
         );
     }
   }
 
   Widget _buildProjectGrid(BuildContext context, int crossAxisCount) {
     return Container(
-      constraints: const BoxConstraints(maxWidth: 1200), // Max width for content
+      constraints: const BoxConstraints(
+        maxWidth: 1200,
+      ), // Max width for content
       child: GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(), // Disable grid scrolling
@@ -197,7 +247,8 @@ class _PortfolioSectionState extends State<PortfolioSection> with SingleTickerPr
           crossAxisCount: crossAxisCount,
           crossAxisSpacing: 30,
           mainAxisSpacing: 30,
-          childAspectRatio: 0.8, // Adjusted aspect ratio slightly to give more vertical space
+          childAspectRatio:
+              0.8, // Adjusted aspect ratio slightly to give more vertical space
         ),
         itemCount: AppData.projects.length,
         itemBuilder: (context, index) {
@@ -241,7 +292,8 @@ class _ProjectCard extends StatefulWidget {
   State<_ProjectCard> createState() => _ProjectCardState();
 }
 
-class _ProjectCardState extends State<_ProjectCard> with SingleTickerProviderStateMixin {
+class _ProjectCardState extends State<_ProjectCard>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<double> _opacityAnimation;
@@ -253,12 +305,14 @@ class _ProjectCardState extends State<_ProjectCard> with SingleTickerProviderSta
       duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.03).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-    );
-    _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-    );
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 1.03,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+    _opacityAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
   }
 
   @override
@@ -279,9 +333,9 @@ class _ProjectCardState extends State<_ProjectCard> with SingleTickerProviderSta
     final Uri uri = Uri.parse(url);
     if (!await launchUrl(uri)) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Could not launch $url')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Could not launch $url')));
       }
     }
   }
@@ -297,7 +351,9 @@ class _ProjectCardState extends State<_ProjectCard> with SingleTickerProviderSta
           return Transform.scale(
             scale: _scaleAnimation.value,
             child: Card(
-              color: AppColors.cardBackground.withOpacity(0.3), // Lower opacity for translucency
+              color: AppColors.cardBackground.withOpacity(
+                0.3,
+              ), // Lower opacity for translucency
               elevation: 10,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -307,7 +363,9 @@ class _ProjectCardState extends State<_ProjectCard> with SingleTickerProviderSta
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ClipRRect(
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(15),
+                    ),
                     child: Image.network(
                       widget.project.imageUrl,
                       height: 180,
@@ -315,14 +373,21 @@ class _ProjectCardState extends State<_ProjectCard> with SingleTickerProviderSta
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
                           height: 180,
-                          color: AppColors.background.withOpacity(0.5), // Fallback also translucent
+                          color: AppColors.background.withOpacity(
+                            0.5,
+                          ), // Fallback also translucent
                           alignment: Alignment.center,
-                          child: Icon(Icons.broken_image, size: 50, color: AppColors.textSecondary.withOpacity(0.5)),
+                          child: Icon(
+                            Icons.broken_image,
+                            size: 50,
+                            color: AppColors.textSecondary.withOpacity(0.5),
+                          ),
                         );
                       },
                     ),
                   ),
-                  Expanded( // Use Expanded to give remaining space to this Column
+                  Expanded(
+                    // Use Expanded to give remaining space to this Column
                     child: Padding(
                       padding: AppPaddings.cardPadding,
                       child: Column(
@@ -330,10 +395,11 @@ class _ProjectCardState extends State<_ProjectCard> with SingleTickerProviderSta
                         children: [
                           Text(
                             widget.project.title,
-                            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                              color: AppColors.textPrimary,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.titleLarge!
+                                .copyWith(
+                                  color: AppColors.textPrimary,
+                                  fontWeight: FontWeight.bold,
+                                ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -343,7 +409,8 @@ class _ProjectCardState extends State<_ProjectCard> with SingleTickerProviderSta
                             child: Text(
                               widget.project.description,
                               style: AppTextStyles.bodyText(context),
-                              maxLines: 3, // Keep maxLines to constrain the text visually
+                              maxLines:
+                                  3, // Keep maxLines to constrain the text visually
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -351,11 +418,26 @@ class _ProjectCardState extends State<_ProjectCard> with SingleTickerProviderSta
                           Wrap(
                             spacing: 8.0,
                             runSpacing: 4.0,
-                            children: widget.project.technologies.map((tech) => Chip(
-                              label: Text(tech, style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.textPrimary)),
-                              backgroundColor: AppColors.primary.withOpacity(0.2),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            )).toList(),
+                            children: widget.project.technologies
+                                .map(
+                                  (tech) => Chip(
+                                    label: Text(
+                                      tech,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall!
+                                          .copyWith(
+                                            color: AppColors.textPrimary,
+                                          ),
+                                    ),
+                                    backgroundColor: AppColors.primary
+                                        .withOpacity(0.2),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
                           ),
                           // Add Spacer to push buttons to the bottom
                           const Spacer(),
@@ -368,30 +450,53 @@ class _ProjectCardState extends State<_ProjectCard> with SingleTickerProviderSta
                                 if (widget.project.githubUrl != null)
                                   Expanded(
                                     child: OutlinedButton.icon(
-                                      onPressed: () => _launchUrl(widget.project.githubUrl!),
-                                      icon: const FaIcon(FontAwesomeIcons.github, size: 20),
+                                      onPressed: () =>
+                                          _launchUrl(widget.project.githubUrl!),
+                                      icon: const FaIcon(
+                                        FontAwesomeIcons.github,
+                                        size: 20,
+                                      ),
                                       label: const Text('GitHub'),
                                       style: OutlinedButton.styleFrom(
                                         foregroundColor: AppColors.textPrimary,
-                                        side: const BorderSide(color: AppColors.primary),
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                                        padding: const EdgeInsets.symmetric(vertical: 10),
+                                        side: const BorderSide(
+                                          color: AppColors.primary,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 10,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                if (widget.project.githubUrl != null && widget.project.liveUrl != null)
+                                if (widget.project.githubUrl != null &&
+                                    widget.project.liveUrl != null)
                                   const SizedBox(width: 10),
                                 if (widget.project.liveUrl != null)
                                   Expanded(
                                     child: ElevatedButton.icon(
-                                      onPressed: () => _launchUrl(widget.project.liveUrl!),
-                                      icon: const FaIcon(FontAwesomeIcons.solidEye, size: 20),
+                                      onPressed: () =>
+                                          _launchUrl(widget.project.liveUrl!),
+                                      icon: const FaIcon(
+                                        FontAwesomeIcons.solidEye,
+                                        size: 20,
+                                      ),
                                       label: const Text('Live Demo'),
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: AppColors.accent,
                                         foregroundColor: AppColors.textPrimary,
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                                        padding: const EdgeInsets.symmetric(vertical: 10),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 10,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -422,7 +527,8 @@ class _CertificateCard extends StatefulWidget {
   State<_CertificateCard> createState() => _CertificateCardState();
 }
 
-class _CertificateCardState extends State<_CertificateCard> with SingleTickerProviderStateMixin {
+class _CertificateCardState extends State<_CertificateCard>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<double> _opacityAnimation;
@@ -434,12 +540,14 @@ class _CertificateCardState extends State<_CertificateCard> with SingleTickerPro
       duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.03).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-    );
-    _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-    );
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 1.03,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+    _opacityAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
   }
 
   @override
@@ -460,9 +568,9 @@ class _CertificateCardState extends State<_CertificateCard> with SingleTickerPro
     final Uri uri = Uri.parse(url);
     if (!await launchUrl(uri)) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Could not launch $url')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Could not launch $url')));
       }
     }
   }
@@ -478,7 +586,9 @@ class _CertificateCardState extends State<_CertificateCard> with SingleTickerPro
           return Transform.scale(
             scale: _scaleAnimation.value,
             child: Card(
-              color: AppColors.cardBackground.withOpacity(0.3), // Lower opacity for translucency
+              color: AppColors.cardBackground.withOpacity(
+                0.3,
+              ), // Lower opacity for translucency
               elevation: 10,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -488,7 +598,9 @@ class _CertificateCardState extends State<_CertificateCard> with SingleTickerPro
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ClipRRect(
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(15),
+                    ),
                     child: Image.network(
                       widget.certificate.imageUrl,
                       height: 180,
@@ -496,9 +608,15 @@ class _CertificateCardState extends State<_CertificateCard> with SingleTickerPro
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
                           height: 180,
-                          color: AppColors.background.withOpacity(0.5), // Fallback also translucent
+                          color: AppColors.background.withOpacity(
+                            0.5,
+                          ), // Fallback also translucent
                           alignment: Alignment.center,
-                          child: Icon(Icons.broken_image, size: 50, color: AppColors.textSecondary.withOpacity(0.5)),
+                          child: Icon(
+                            Icons.broken_image,
+                            size: 50,
+                            color: AppColors.textSecondary.withOpacity(0.5),
+                          ),
                         );
                       },
                     ),
@@ -511,10 +629,11 @@ class _CertificateCardState extends State<_CertificateCard> with SingleTickerPro
                         children: [
                           Text(
                             widget.certificate.title,
-                            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                              color: AppColors.textPrimary,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.titleLarge!
+                                .copyWith(
+                                  color: AppColors.textPrimary,
+                                  fontWeight: FontWeight.bold,
+                                ),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -541,16 +660,27 @@ class _CertificateCardState extends State<_CertificateCard> with SingleTickerPro
                             duration: const Duration(milliseconds: 200),
                             child: Center(
                               child: ElevatedButton.icon(
-                                onPressed: widget.certificate.certificateUrl != null
-                                    ? () => _launchUrl(widget.certificate.certificateUrl!)
+                                onPressed:
+                                    widget.certificate.certificateUrl != null
+                                    ? () => _launchUrl(
+                                        widget.certificate.certificateUrl!,
+                                      )
                                     : null, // Disable if no URL
-                                icon: const FaIcon(FontAwesomeIcons.solidEye, size: 20),
+                                icon: const FaIcon(
+                                  FontAwesomeIcons.solidEye,
+                                  size: 20,
+                                ),
                                 label: const Text('View Certificate'),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.accent,
                                   foregroundColor: AppColors.textPrimary,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                    vertical: 10,
+                                  ),
                                 ),
                               ),
                             ),
@@ -581,7 +711,8 @@ class _SkillCard extends StatefulWidget {
   State<_SkillCard> createState() => _SkillCardState();
 }
 
-class _SkillCardState extends State<_SkillCard> with SingleTickerProviderStateMixin {
+class _SkillCardState extends State<_SkillCard>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<Offset> _slideAnimation;
@@ -593,12 +724,14 @@ class _SkillCardState extends State<_SkillCard> with SingleTickerProviderStateMi
       duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.05).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-    );
-    _slideAnimation = Tween<Offset>(begin: Offset.zero, end: const Offset(0, -5)).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-    );
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 1.05,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+    _slideAnimation = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(0, -5),
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
   }
 
   @override
@@ -629,12 +762,16 @@ class _SkillCardState extends State<_SkillCard> with SingleTickerProviderStateMi
               scale: _scaleAnimation.value,
               child: Container(
                 decoration: BoxDecoration(
-                  color: AppColors.cardBackground.withOpacity(0.8), // Translucent background
+                  color: AppColors.cardBackground.withOpacity(
+                    0.8,
+                  ), // Translucent background
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(color: AppColors.border, width: 1),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primary.withOpacity(_controller.value * 0.3), // Neon glow on hover
+                      color: AppColors.primary.withOpacity(
+                        _controller.value * 0.3,
+                      ), // Neon glow on hover
                       blurRadius: 15 * _controller.value,
                       spreadRadius: 5 * _controller.value,
                     ),

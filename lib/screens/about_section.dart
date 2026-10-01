@@ -1,7 +1,8 @@
 // lib/screens/about_section.dart
 import 'package:flutter/material.dart';
 import 'package:three_d_portfolio/widgets/responsive_layout.dart';
-import 'package:three_d_portfolio/widgets/section_title.dart' hide AppColors, AppTextStyles, AppPaddings;
+import 'package:three_d_portfolio/widgets/section_title.dart'
+    hide AppColors, AppTextStyles, AppPaddings;
 
 import 'package:three_d_portfolio/utils/constants.dart';
 import 'package:three_d_portfolio/personal_data/portfolio_content.dart';
@@ -17,7 +18,9 @@ class AboutSection extends StatelessWidget {
       // needs its own horizontal padding to avoid sitting flush against the
       // screen edge (Skills/Portfolio don't need this - their content sizes
       // to a max-width and is centered by their parent Column instead).
-      padding: AppPaddings.sectionPadding + const EdgeInsets.symmetric(horizontal: 24.0),
+      padding:
+          AppPaddings.sectionPadding +
+          const EdgeInsets.symmetric(horizontal: 24.0),
       // REMOVED: color: AppColors.background,
       // We want the global animated background to show through, so no solid color here.
       child: ResponsiveLayout(
@@ -30,9 +33,12 @@ class AboutSection extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     return Container(
-      padding: AppPaddings.cardPadding, // Padding within the translucent container
+      padding:
+          AppPaddings.cardPadding, // Padding within the translucent container
       decoration: BoxDecoration(
-        color: AppColors.cardBackground.withOpacity(0.8), // Translucent background
+        color: AppColors.cardBackground.withOpacity(
+          0.8,
+        ), // Translucent background
         borderRadius: BorderRadius.circular(15),
         border: Border.all(color: AppColors.border, width: 1),
         boxShadow: [
@@ -56,7 +62,10 @@ class AboutSection extends StatelessWidget {
           const SizedBox(height: 16),
           for (int i = 0; i < AboutContent.paragraphs.length; i++) ...[
             if (i > 0) const SizedBox(height: 10),
-            Text(AboutContent.paragraphs[i], style: AppTextStyles.bodyText(context)),
+            Text(
+              AboutContent.paragraphs[i],
+              style: AppTextStyles.bodyText(context),
+            ),
           ],
         ],
       ),
@@ -69,8 +78,13 @@ class AboutSection extends StatelessWidget {
       height: 250, // Fixed height for the image container
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: AppColors.cardBackground.withOpacity(0.6), // Translucent circle background
-        border: Border.all(color: AppColors.primary.withOpacity(0.7), width: 3), // Glowing border
+        color: AppColors.cardBackground.withOpacity(
+          0.6,
+        ), // Translucent circle background
+        border: Border.all(
+          color: AppColors.primary.withOpacity(0.7),
+          width: 3,
+        ), // Glowing border
         boxShadow: [
           BoxShadow(
             color: AppColors.primary.withOpacity(0.4),
@@ -99,12 +113,20 @@ class AboutSection extends StatelessWidget {
         _buildProfileImage(context),
         const SizedBox(height: 40),
         _buildContent(context),
+        // Breathing room at the end of the section, so the last paragraph
+        // isn't flush against the screen edge where the scroll transition to
+        // the next section triggers.
+        const SizedBox(height: 100),
       ],
     );
   }
 
-  Widget _buildTabletAndDesktopLayout(BuildContext context, {bool isTablet = false}) {
-    return Column( // Keep Column as parent to contain SectionTitle
+  Widget _buildTabletAndDesktopLayout(
+    BuildContext context, {
+    bool isTablet = false,
+  }) {
+    return Column(
+      // Keep Column as parent to contain SectionTitle
       children: [
         const SectionTitle(title: AboutContent.sectionTitle),
         const SizedBox(height: 40),
@@ -116,7 +138,9 @@ class AboutSection extends StatelessWidget {
               flex: 3, // Content takes more space
               child: _buildContent(context),
             ),
-            SizedBox(width: isTablet ? 30 : 60), // Spacing between content and image
+            SizedBox(
+              width: isTablet ? 30 : 60,
+            ), // Spacing between content and image
             Expanded(
               flex: 2, // Image takes less space
               child: Align(
@@ -126,6 +150,10 @@ class AboutSection extends StatelessWidget {
             ),
           ],
         ),
+        // Breathing room at the end of the section, so the content isn't
+        // flush against the screen edge where the scroll transition to the
+        // next section triggers.
+        const SizedBox(height: 100),
       ],
     );
   }
