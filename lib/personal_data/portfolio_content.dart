@@ -30,17 +30,15 @@ class Project {
 // --- Certificate Model ---
 class Certificate {
   final String title;
-  final String imageUrl; // URL to the certificate image
+  final String imageAsset; // Local asset path to the certificate image
   final String issuer;
   final String issueDate;
-  final String? certificateUrl; // Link to verify the certificate online
 
   Certificate({
     required this.title,
-    required this.imageUrl,
+    required this.imageAsset,
     required this.issuer,
     required this.issueDate,
-    this.certificateUrl,
   });
 }
 
@@ -74,48 +72,67 @@ class AppData {
   static final List<Project> projects = [
     Project(
       title: 'E-commerce Platform',
-      description: 'A full-stack e-commerce solution with user authentication, product listings, shopping cart, and checkout.',
-      imageUrl: 'https://placehold.co/600x400/AD343E/F3E9F4?text=E-Commerce', // Placeholder Image
-      technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'Redux', 'Stripe'],
+      description:
+          'A full-stack e-commerce solution with user authentication, product listings, shopping cart, and checkout.',
+      imageUrl:
+          'https://placehold.co/600x400/AD343E/F3E9F4?text=E-Commerce', // Placeholder Image
+      technologies: [
+        'React',
+        'Node.js',
+        'Express',
+        'MongoDB',
+        'Redux',
+        'Stripe',
+      ],
       githubUrl: 'https://github.com/your-username/ecommerce-app',
       liveUrl: 'https://ecommerce.example.com',
     ),
     Project(
       title: 'Real-time Chat App',
-      description: 'A real-time chat application with group chats, private messaging, and notification features.',
-      imageUrl: 'https://placehold.co/600x400/50B2C0/F3E9F4?text=Chat+App', // Placeholder Image
+      description:
+          'A real-time chat application with group chats, private messaging, and notification features.',
+      imageUrl:
+          'https://placehold.co/600x400/50B2C0/F3E9F4?text=Chat+App', // Placeholder Image
       technologies: ['React', 'Socket.IO', 'Node.js', 'PostgreSQL'],
       githubUrl: 'https://github.com/your-username/chat-app',
       liveUrl: 'https://chat.example.com',
     ),
     Project(
       title: 'Portfolio Website',
-      description: 'My personal portfolio website showcasing my skills, projects, and contact information, built with modern web technologies.',
-      imageUrl: 'https://placehold.co/600x400/003C43/F3E9F4?text=Portfolio', // Placeholder Image
+      description:
+          'My personal portfolio website showcasing my skills, projects, and contact information, built with modern web technologies.',
+      imageUrl:
+          'https://placehold.co/600x400/003C43/F3E9F4?text=Portfolio', // Placeholder Image
       technologies: ['Flutter', 'Dart', 'CustomPainter', 'Animations'],
       githubUrl: 'https://github.com/your-username/portfolio-website',
       liveUrl: 'https://portfolio.example.com',
     ),
     Project(
       title: 'Task Management API',
-      description: 'A robust RESTful API for managing tasks, including user authentication, task creation, and filtering.',
-      imageUrl: 'https://placehold.co/600x400/7469B6/F3E9F4?text=Task+API', // Placeholder Image
+      description:
+          'A robust RESTful API for managing tasks, including user authentication, task creation, and filtering.',
+      imageUrl:
+          'https://placehold.co/600x400/7469B6/F3E9F4?text=Task+API', // Placeholder Image
       technologies: ['Python', 'Django REST Framework', 'PostgreSQL'],
       githubUrl: 'https://github.com/your-username/task-api',
       // No live URL as it's an API
     ),
     Project(
       title: 'Mobile Recipe App',
-      description: 'A mobile application for discovering and saving recipes, with features like ingredient search and meal planning.',
-      imageUrl: 'https://placehold.co/600x400/96B4C4/F3E9F4?text=Recipe+App', // Placeholder Image
+      description:
+          'A mobile application for discovering and saving recipes, with features like ingredient search and meal planning.',
+      imageUrl:
+          'https://placehold.co/600x400/96B4C4/F3E9F4?text=Recipe+App', // Placeholder Image
       technologies: ['React Native', 'Firebase', 'Redux'],
       githubUrl: 'https://github.com/your-username/recipe-app',
       // No live URL for a mobile app (unless deployed to stores)
     ),
     Project(
       title: 'Blog Content Management System',
-      description: 'A custom CMS for managing blog posts, categories, and users, with a rich text editor and media uploads.',
-      imageUrl: 'https://placehold.co/600x400/F15A59/F3E9F4?text=CMS', // Placeholder Image
+      description:
+          'A custom CMS for managing blog posts, categories, and users, with a rich text editor and media uploads.',
+      imageUrl:
+          'https://placehold.co/600x400/F15A59/F3E9F4?text=CMS', // Placeholder Image
       technologies: ['PHP', 'Laravel', 'MySQL', 'Blade Templates'],
       githubUrl: 'https://github.com/your-username/blog-cms',
       liveUrl: 'https://blogcms.example.com',
@@ -125,53 +142,58 @@ class AppData {
   // --- Certificates Data ---
   static final List<Certificate> certificates = [
     Certificate(
-      title: 'Belajar Dasar Pemrograman JavaScript',
-      imageUrl: 'https://placehold.co/600x400/800080/FFFFFF?text=Cert+JS', // Placeholder: Purple
-      issuer: 'Dicoding',
-      issueDate: '20 Desember 2023',
-      certificateUrl: 'https://www.dicoding.com/certificates/EXAMPLE-JS-CERT',
+      title: 'AI-First Product Management',
+      imageAsset: 'assets/certificates/ai-product-management-airtribe.png',
+      issuer: 'Airtribe',
+      issueDate: '19 May 2026',
     ),
     Certificate(
-      title: 'Belajar Dasar Vaocloudx Data',
-      imageUrl: 'https://placehold.co/600x400/FFA500/FFFFFF?text=Cert+Data', // Placeholder: Orange
-      issuer: 'Dicoding',
-      issueDate: '20 Agustus 2023',
-      certificateUrl: 'https://www.dicoding.com/certificates/EXAMPLE-DATA-CERT',
+      title: 'Introduction to Figma',
+      imageAsset: 'assets/certificates/figma-simplilearn.png',
+      issuer: 'Simplilearn SkillUp',
+      issueDate: '25 September 2026',
     ),
     Certificate(
-      title: 'Belajar Membuat Aplikasi Web dengan React',
-      imageUrl: 'https://placehold.co/600x400/008080/FFFFFF?text=Cert+React', // Placeholder: Teal
-      issuer: 'Dicoding',
-      issueDate: '25 Desember 2023',
-      certificateUrl: 'https://www.dicoding.com/certificates/EXAMPLE-REACT-CERT',
+      title: 'Generative AI Mastermind',
+      imageAsset: 'assets/certificates/genai-mastermind-outskill.png',
+      issuer: 'Outskill',
+      // Not printed on the certificate itself; taken from the file's
+      // creation date.
+      issueDate: '28 August 2025',
     ),
     Certificate(
-      title: 'Cloud Computing Practitioner',
-      imageUrl: 'https://placehold.co/600x400/FFD700/000000?text=Cert+Cloud', // Placeholder: Gold
-      issuer: 'AWS Academy',
-      issueDate: '15 Maret 2024',
-      certificateUrl: 'https://www.aws.training/certificates/EXAMPLE-AWS-CERT',
+      title: 'Cyber Security and Forensics',
+      imageAsset: 'assets/certificates/cybersecurity-ibm.png',
+      issuer: 'IBM Skills Network',
+      issueDate: '14 May 2025',
     ),
     Certificate(
-      title: 'Machine Learning Basics',
-      imageUrl: 'https://placehold.co/600x400/4682B4/FFFFFF?text=Cert+ML', // Placeholder: SteelBlue
-      issuer: 'Coursera',
-      issueDate: '10 Januari 2024',
-      certificateUrl: 'https://www.coursera.org/verify/EXAMPLE-ML-CERT',
+      title: 'Flutter Industrial Training (90 Days)',
+      imageAsset: 'assets/certificates/flutter-internship-hindtech.png',
+      issuer: 'Hindtech IT Solutions',
+      issueDate: '15 May 2025',
     ),
     Certificate(
-      title: 'Ethical Hacking Essentials',
-      imageUrl: 'https://placehold.co/600x400/B22222/FFFFFF?text=Cert+Hacking', // Placeholder: FireBrick
-      issuer: 'EC-Council',
-      issueDate: '01 Juli 2023',
-      certificateUrl: 'https://www.eccouncil.org/verify/EXAMPLE-EH-CERT',
+      title: 'Marketing Internship',
+      imageAsset: 'assets/certificates/marketing-internship-fuzemee.png',
+      issuer: 'FuzeMee',
+      issueDate: '10 December 2022',
     ),
   ];
 
   static final List<SocialLink> socialLinks = [
-    SocialLink(icon: FontAwesomeIcons.linkedin, url: 'https://www.linkedin.com/in/himanshu-chatterjee-386684267'),
-    SocialLink(icon: FontAwesomeIcons.github, url: 'https://github.com/Himanshu-moderator'),
-    SocialLink(icon: FontAwesomeIcons.xTwitter, url: 'https://x.com/'), // TODO: update once the X account is live
+    SocialLink(
+      icon: FontAwesomeIcons.linkedin,
+      url: 'https://www.linkedin.com/in/himanshu-chatterjee-386684267',
+    ),
+    SocialLink(
+      icon: FontAwesomeIcons.github,
+      url: 'https://github.com/Himanshu-moderator',
+    ),
+    SocialLink(
+      icon: FontAwesomeIcons.xTwitter,
+      url: 'https://x.com/',
+    ), // TODO: update once the X account is live
   ];
 
   static final List<Skill> skills = [

@@ -564,15 +564,13 @@ class _CertificateCardState extends State<_CertificateCard>
     }
   }
 
-  Future<void> _launchUrl(String url) async {
-    final Uri uri = Uri.parse(url);
-    if (!await launchUrl(uri)) {
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Could not launch $url')));
-      }
-    }
+  void _showCertificatePreview() {
+    showDialog<void>(
+      context: context,
+      barrierColor: Colors.black.withOpacity(0.75),
+      builder: (dialogContext) =>
+          _CertificatePreviewDialog(certificate: widget.certificate),
+    );
   }
 
   @override
@@ -601,8 +599,8 @@ class _CertificateCardState extends State<_CertificateCard>
                     borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(15),
                     ),
-                    child: Image.network(
-                      widget.certificate.imageUrl,
+                    child: Image.asset(
+                      widget.certificate.imageAsset,
                       height: 180,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
@@ -660,12 +658,7 @@ class _CertificateCardState extends State<_CertificateCard>
                             duration: const Duration(milliseconds: 200),
                             child: Center(
                               child: ElevatedButton.icon(
-                                onPressed:
-                                    widget.certificate.certificateUrl != null
-                                    ? () => _launchUrl(
-                                        widget.certificate.certificateUrl!,
-                                      )
-                                    : null, // Disable if no URL
+                                onPressed: _showCertificatePreview,
                                 icon: const FaIcon(
                                   FontAwesomeIcons.solidEye,
                                   size: 20,
@@ -694,6 +687,103 @@ class _CertificateCardState extends State<_CertificateCard>
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+// Full-size certificate preview shown in a dialog rather than via an
+// external link - the image is a bundled asset rendered by Flutter's
+// CanvasKit engine (not a real DOM <img>), so there's no raw file link and
+// no right-click "save image as" the way a normal web image would offer.
+class _CertificatePreviewDialog extends StatelessWidget {
+  final Certificate certificate;
+
+  const _CertificatePreviewDialog({required this.certificate});
+
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      insetPadding: const EdgeInsets.all(24),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: screenSize.width < 700 ? screenSize.width : 700,
+          maxHeight: screenSize.height * 0.9,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppColors.cardBackground,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: AppColors.border, width: 1),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.4),
+                blurRadius: 30,
+                spreadRadius: 5,
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: const Icon(Icons.close, color: AppColors.textPrimary),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ),
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.asset(
+                      certificate.imageAsset,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      certificate.title,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: AppColors.textPrimary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      certificate.issuer,
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.bodyText(context).copyWith(
+                        color: AppColors.textSecondary,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Issued: ${certificate.issueDate}',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.bodyText(
+                        context,
+                      ).copyWith(fontSize: 14, color: AppColors.textSecondary),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
